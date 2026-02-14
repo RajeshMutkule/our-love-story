@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saru ❤️ Rajesh - Our Love Story</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#1f1c2c,#928dab);
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+    transition:1s;
+}
+
+section{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:20px;
+    animation:fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+h1{
+    font-family:'Great Vibes',cursive;
+    font-size:3.5em;
+    margin-bottom:20px;
+    text-shadow:0 0 20px pink;
+}
+
+.card{
+    max-width:750px;
+    background:rgba(0,0,0,0.55);
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 0 40px rgba(255,255,255,0.3);
+    position:relative;
+}
+
+img{
+    margin-top:20px;
+    border-radius:20px;
+    box-shadow:0 0 25px pink;
+    object-fit:cover;
+}
+
+button{
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    font-size:1em;
+    cursor:pointer;
+    background:#ff0066;
+    color:white;
+    margin-top:25px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#ff3385;
+    transform:scale(1.1);
+}
+
+.hidden{display:none;}
+
+.hearts{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+
+.heart{
+    position:absolute;
+    font-size:22px;
+    animation:float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh);opacity:1;}
+    100%{transform:translateY(-10vh);opacity:0;}
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+#yesBtn{
+    animation:pulse 1.5s infinite;
+}
+</style>
+</head>
+
+<body>
+
+<section id="intro">
+<h1>Saru ❤️ Rajesh</h1>
+<p>From Devgiri Fort to Forever 💕</p>
+<button onclick="startStory()">Start Our Journey ✨</button>
+</section>
+
+<div id="storyContainer"></div>
+<div class="hearts" id="hearts"></div>
+
+<!-- FIXED AUDIO (no autoplay) -->
+<audio id="bgMusic" loop>
+<source src="your-song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const moments = [
+{
+title:"Where It All Began - Devgiri Fort 🏰",
+text:"Among the ancient walls of Devgiri Fort, destiny quietly introduced me to you. That day changed everything in my life.",
+img:"devgiri.jpg"
+},
+{
+title:"Rain on the Mountain Caves 🌧",
+text:"We were completely wet in the rain, laughing without caring about the world. That rain didn’t just soak us — it sealed a memory forever.",
+img:"rain.jpg"
+},
+{
+title:"Inside the Greenery of the Caves 🕳",
+text:"Walking inside those caves together felt magical. The silence, the closeness, the way you looked at me — unforgettable.",
+img:"caves.jpg"
+},
+{
+title:"Our Café Moment ☕",
+text:"Sitting across from you in the café, sharing smiles and small talks — simple moment, but priceless.",
+img:"cafe.jpg"
+},
+{
+title:"Siddharth Garden Walk 🌳",
+text:"That peaceful walk in Siddharth Garden, dreaming about our future — I wished time would stop right there.",
+img:"garden.jpg"
+},
+{
+title:"Movie Date at Prozone Mall 🎬",
+text:"Watching a movie at Prozone Mall was fun, but honestly, I was watching you more than the screen.",
+img:"mall.jpg"
+},
+{
+title:"Bike Ride to Grishneshwar Temple 🏍",
+text:"That bike ride to the temple — wind in our faces, faith in our hearts. It felt like a blessing for our love.",
+img:"temple.jpg"
+},
+{
+title:"Bibi Ka Maqbara 🤍",
+text:"Standing together at Bibi Ka Maqbara, a symbol of eternal love. I silently promised to love you forever. I am happy because you are my happy girl.",
+img:"maqbara.jpg"
+}
+];
+
+let index=0;
+
+function startStory(){
+document.getElementById("intro").classList.add("hidden");
+startMusic();
+showMoment();
+}
+
+/* MUSIC FIX */
+function startMusic(){
+let music=document.getElementById("bgMusic");
+music.volume=0;
+music.play();
+let fade=setInterval(()=>{
+if(music.volume<1){music.volume+=0.05;}
+else{clearInterval(fade);}
+},200);
+}
+
+/* TYPEWRITER EFFECT */
+function typeWriter(text, element){
+let i=0;
+element.innerHTML="";
+let typing=setInterval(()=>{
+element.innerHTML+=text.charAt(i);
+i++;
+if(i>=text.length){clearInterval(typing);}
+},35);
+}
+
+function showMoment(){
+if(index<moments.length){
+document.getElementById("storyContainer").innerHTML=`
+<section>
+<div class="card">
+<h1>${moments[index].title}</h1>
+<p id="typingText"></p>
+<img src="${moments[index].img}" width="420" height="520">
+<br>
+<button onclick="nextMoment()">Next Moment ❤️</button>
+</div>
+</section>
+`;
+typeWriter(moments[index].text, document.getElementById("typingText"));
+index++;
+}else{
+showProposal();
+}
+}
+
+function nextMoment(){
+showMoment();
+}
+
+function showProposal(){
+document.getElementById("storyContainer").innerHTML=`
+<section>
+<div class="card" id="proposalCard">
+<h1>After All These Beautiful Moments... 💖</h1>
+<p>
+From forts to temples, from gardens to malls…  
+Every place became special because you were there.  
+I really miss you a lot.  
+<br><br>
+Saru, will you be my Valentine and my forever? 💍
+</p>
+<button onclick="sheSaidYes()" id="yesBtn">YES 💍</button>
+<button onclick="moveNo(this)" style="background:#444;margin-left:15px;">No 😜</button>
+</div>
+</section>
+`;
+}
+
+function sheSaidYes(){
+document.body.style.background="linear-gradient(to right,#f7971e,#ffd200)";
+document.getElementById("proposalCard").innerHTML=`
+<h1 style="font-size:4em;text-shadow:0 0 40px red;">
+SHE SAID YES!!! 💍❤️
+</h1>
+<p style="font-size:1.5em;margin-top:20px;">
+Saru ❤️ Rajesh — Forever & Always
+</p>
+`;
+for(let i=0;i<120;i++){createHeart();}
+}
+
+function moveNo(btn){
+btn.style.position="absolute";
+btn.style.top=Math.random()*80+"vh";
+btn.style.left=Math.random()*80+"vw";
+}
+
+function createHeart(){
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(Math.random()*3+3)+"s";
+document.getElementById("hearts").appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+}
+
+setInterval(createHeart,500);
+
+</script>
+
+</body>
+</html>
